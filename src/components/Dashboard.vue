@@ -6,7 +6,7 @@
           <v-data-table
             :headers="headers"
             :items="pedidos"
-            sort-by="calories"
+            sort-by="id"
             class="elevation-1"
           >
             <template v-slot:top>
