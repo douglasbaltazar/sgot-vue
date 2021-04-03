@@ -5,7 +5,7 @@
       <template>
         <v-data-table
           :headers="headers"
-          :items="desserts"
+          :items="pedidos"
           sort-by="calories"
           class="elevation-1"
         >
@@ -14,7 +14,7 @@
               <v-toolbar-title>Todos Pedidos</v-toolbar-title>
               <v-divider class="mx-4" inset vertical></v-divider>
               <v-spacer></v-spacer>
-              <v-dialog v-model="dialog" max-width="500px">
+              <v-dialog v-model="dialog" max-width="550px">
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
                     color="primary"
@@ -34,34 +34,57 @@
                   <v-card-text>
                     <v-container>
                       <v-row>
-                        <v-col cols="12" sm="6" md="4">
+                        <v-col cols="12" sm="6" md="8">
                           <v-text-field
-                            v-model="editedItem.name"
-                            label="Dessert name"
+                            v-model="produtoItem.product1"
+                            counter="50"
+                            label="Produto 1"
+                            prepend-icon="mdi-archive"
                           ></v-text-field>
                         </v-col>
                         <v-col cols="12" sm="6" md="4">
                           <v-text-field
-                            v-model="editedItem.calories"
-                            label="Calories"
+                            v-model="produtoItem.valueProduct1"
+                            label="Valor Produto 1"
+                            type="number"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="8">
+                          <v-text-field
+                          counter="50"
+                            v-model="produtoItem.product2"
+                            prepend-icon="mdi-archive"
+                            label="Produto 2"
                           ></v-text-field>
                         </v-col>
                         <v-col cols="12" sm="6" md="4">
                           <v-text-field
-                            v-model="editedItem.fat"
-                            label="Fat (g)"
+                            v-model="produtoItem.valueProduct2"
+                            label="Valor Produto 2"
+                            type="number"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="8">
+                          <v-text-field
+                          counter="50"
+                            v-model="produtoItem.product3"
+                            prepend-icon="mdi-archive"
+                            label="Produto 3"
                           ></v-text-field>
                         </v-col>
                         <v-col cols="12" sm="6" md="4">
                           <v-text-field
-                            v-model="editedItem.carbs"
-                            label="Carbs (g)"
+                            v-model="produtoItem.valueProduct3"
+                            label="Valor Produto 3"
+                            type="number"
                           ></v-text-field>
                         </v-col>
-                        <v-col cols="12" sm="6" md="4">
+                        <v-col cols="12" sm="6" md="12">
                           <v-text-field
-                            v-model="editedItem.protein"
-                            label="Protein (g)"
+                            v-model="produtoItem.totalValue"
+                            label="Valor Total"
+                            prepend-icon="mdi-currency-brl"
+                            type="number"
                           ></v-text-field>
                         </v-col>
                       </v-row>
@@ -71,10 +94,10 @@
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="blue darken-1" text @click="close">
-                      Cancel
+                      Sair
                     </v-btn>
                     <v-btn color="blue darken-1" text @click="save">
-                      Save
+                      Salvar
                     </v-btn>
                   </v-card-actions>
                 </v-card>
@@ -82,7 +105,7 @@
               <v-dialog v-model="dialogDelete" max-width="500px">
                 <v-card>
                   <v-card-title class="headline"
-                    >Are you sure you want to delete this item?</v-card-title
+                    >Quer realmente deletar esse pedido??</v-card-title
                   >
                   <v-card-actions>
                     <v-spacer></v-spacer>
@@ -116,6 +139,7 @@
 
 <script lang="ts">
 import Vue from "vue";
+import apiService from '../services/apiService'
 
 export default Vue.extend({
   name: "HelloWorld",
@@ -127,15 +151,16 @@ export default Vue.extend({
         text: "ID",
         align: "start",
         sortable: false,
-        value: "name",
+        value: "id",
       },
-      { text: "Produto 1", value: "calories" },
-      { text: "Produto 2", value: "fat" },
-      { text: "Produto 3", value: "carbs" },
-      { text: "Valor Total", value: "protein" },
+      { text: "Produto 1", value: "product1" },
+      { text: "Produto 2", value: "product2" },
+      { text: "Produto 3", value: "product3" },
+      { text: "Valor Total", value: "totalValue" },
       { text: "Ações", value: "actions", sortable: false },
     ],
     desserts: [] as any,
+    pedidos: [] as any,
     editedIndex: -1,
     editedItem: {
       name: "",
@@ -143,6 +168,27 @@ export default Vue.extend({
       fat: 0,
       carbs: 0,
       protein: 0,
+    },
+    produtoIndex: -1,
+    produtoItem: {
+      id: 0,
+      product1: "",
+      product2: "",
+      product3: "",
+      valueProduct1: 0,
+      valueProduct2: 0,
+      valueProduct3: 0,
+      totalValue: 0
+    },
+    defaultProduto: {
+      id: 0,
+      product1: "",
+      product2: "",
+      product3: "",
+      valueProduct1: 0,
+      valueProduct2: 0,
+      valueProduct3: 0,
+      totalValue: 0
     },
     defaultItem: {
       name: "",
@@ -155,7 +201,7 @@ export default Vue.extend({
 
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? "New Item" : "Edit Item";
+      return this.editedIndex === -1 ? "Novo Pedido" : "Editar Pedido";
     },
   },
 
@@ -168,8 +214,9 @@ export default Vue.extend({
     },
   },
 
-  created() {
+  async created() {
     this.initialize();
+    this.pegarPedidos();
   },
 
   methods: {
@@ -247,7 +294,12 @@ export default Vue.extend({
         },
       ];
     },
-
+    async pegarPedidos() {
+      apiService.getOrders().then((response) => {
+        this.pedidos = response.data
+        console.log(this.pedidos)
+      })
+    },
     editItem(item: any) {
       this.editedIndex = this.desserts.indexOf(item);
       this.editedItem = Object.assign({}, item);

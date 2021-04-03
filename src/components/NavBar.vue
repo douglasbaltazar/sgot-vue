@@ -37,7 +37,7 @@
             <v-list-item-icon>
               <v-icon>mdi-archive</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Pedidos</v-list-item-title>
+            <v-list-item-title>Cadastrar novo Pedido</v-list-item-title>
           </v-list-item>
           <v-list-item to="/ordens">
             <v-list-item-icon>

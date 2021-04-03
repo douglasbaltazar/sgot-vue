@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import Home from '../views/Home.vue'
 import PedidoNew from '../views/PedidoNew.vue'
-import OrdensTransporte from '../views/OrdensTransporte.vue'
+import OrdensTransporte from '../views/Ordens.vue'
 
 Vue.use(VueRouter)
 
@@ -24,7 +24,13 @@ const routes: Array<RouteConfig> = [
     path: '/pedidos',
     name: 'PedidoNew',
     component: PedidoNew
-  }
+  },
+  {
+    path: '/ordens',
+    name: 'Ordens',
+    component: OrdensTransporte
+  },
+
 ]
 
 const router = new VueRouter({
