@@ -1,7 +1,7 @@
 import axios from 'axios';
 //import TransportOrderService from './TransportOrderService';
 
-const ORDERS_REST_API_ALL = 'http://localhost:8081/api/v1/orders2/';
+const ORDERS_REST_API_ALL = 'http://localhost:8081/api/v1/orders/';
 const ORDERS_REST_API_GET500 = 'http://localhost:8081/api/v1/ordersabove500/';
 const ORDERS_REST_API_CREATE = 'http://localhost:8081/api/v1/orders';
 const ORDER_GET_LAST_ID = 'http://localhost:8081/api/v1/ordersLastId/';

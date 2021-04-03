@@ -41,9 +41,9 @@
           </v-list-item>
           <v-list-item to="/ordens">
             <v-list-item-icon>
-              <v-icon>mdi-truck</v-icon>
+              <v-icon>mdi-archive-arrow-up</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Ordens de Produto</v-list-item-title>
+            <v-list-item-title>Pedidos com Valor > 500</v-list-item-title>
           </v-list-item>
           <v-list-item to="/about">
             <v-list-item-icon>
