@@ -1,4 +1,34 @@
-# sgot-vue
+
+# SGOT
+O Sgot foi um processo seletivo que me foi proposto, acabei por refazer-lo para estudar mais.
+
+### Imagem do primeiro projeto em React:
+![React](./react.png)
+
+## Imagens em Vue
+
+
+### Inicial
+![Inicial](./inicial.png)
+
+### Form
+![Form](./form.png)
+
+### Sobre / NavBar
+![Sobre](./navbar.png)
+
+
+Houve muita melhora de um projeto para o outro, o conceito de SPA foi bastante utilizado, e continuou usando o back-end do passado que foi feito em SpringBoot.
+
+## Back-end utilizado:
+
+### [SGOT-BackEnd](https://github.com/douglasbaltazar/SGOT-BackEnd)
+
+
+<br>
+
+<br>
+
 
 ## Project setup
 ```
