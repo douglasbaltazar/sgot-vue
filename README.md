@@ -9,13 +9,13 @@ O Sgot foi um processo seletivo que me foi proposto, acabei por refazer-lo para 
 
 
 ### Inicial
-![Inicial](./inicial.png)
+![Inicial](./inicial.PNG)
 
 ### Form
-![Form](./form.png)
+![Form](./form.PNG)
 
 ### Sobre / NavBar
-![Sobre](./navbar.png)
+![Sobre](./navbar.PNG)
 
 
 Houve muita melhora de um projeto para o outro, o conceito de SPA foi bastante utilizado, e continuou usando o back-end do passado que foi feito em SpringBoot.
